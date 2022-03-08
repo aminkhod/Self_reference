@@ -18,7 +18,9 @@ adj
 # In[3]:
 
 
-ans = pd.read_csv('Tabelle1-Table 1.csv', sep=';')
+# ans = pd.read_csv('Tabelle1-Table 1.csv', sep=';')
+ans = pd.read_csv('Tabelle1-Table 1.csv')
+    
 ans
 
 
@@ -34,7 +36,7 @@ ans
 
 # ## Longest Common Subsequence
 
-# In[13]:
+# In[5]:
 
 
 def lcs(X, Y):
@@ -67,7 +69,7 @@ Y = "GXTXAYB"
 print("Length of LCS is ", lcs(X, Y))
 
 
-# In[5]:
+# In[6]:
 
 
 # COMPUTING right answer for each participants 
@@ -114,13 +116,13 @@ ans['number of correct recall'] = numRightAns
 ans['number of False recall'] = numFalseAns
 
 
-# In[6]:
+# In[7]:
 
 
 len(adj['Adjektiv'][45:])
 
 
-# In[7]:
+# In[8]:
 
 
 # recall rate computing
@@ -142,7 +144,7 @@ ans['Doppelt'] = ans['Doppelt'].fillna(0)
 ans.iloc[:,57:]
 
 
-# In[8]:
+# In[9]:
 
 
 # COMPUTING recall and FPR based on tense and group 
@@ -636,257 +638,42 @@ ans['Neutral Present Recall'], ans['Neutral Past Recall'], ans['Neutral Other Re
 # 1 - ans['Present Recall rate'], 1 - ans['Past Recall rate'], 1 - ans['Other Recall rate']
 
 
-# In[9]:
-
-
-# # COMPUTING recall and FPR based on sentiment
-
-# numPosRecal = []
-# numNegRecal = []
-# numNeutralRecal = []
-
-# for i, x in ans.iterrows():
-#     posRightAns = 0
-#     negRightAns = 0
-#     NeutralRightAns = 0
-    
-#     buf = x.iloc[12:57]
-#     cleanAdjList = []
-    
-#     for zz in buf:
-#         if type(zz) != type(np.nan):
-#             if zz.strip() != '' and zz not in cleanAdjList:
-#                 cleanAdjList.append(zz)
-
-# #     cleanAdjList = list(set(cleanAdjList))
-    
-#     if x['Group'] == 1 or x['Group'] == 2 or x['Group'] == 3:
-#         for aj in cleanAdjList:
-#             if aj in list(adj['Adjektiv'][:45]) or aj in list(adj['AdjerlaubteZeichen'][:45]):
-#                 try:
-#                     if adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == -1:
-#                         negRightAns += 1
-#                     elif adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == 1:
-#                         posRightAns += 1
-#                     elif adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == 0:
-#                         NeutralRightAns += 1
-#                 except:
-#                     if adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == -1:
-#                         negRightAns += 1
-#                     elif adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == 1:
-#                         posRightAns += 1
-#                     elif adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == 0:
-#                         NeutralRightAns += 1
-# #                     print(len(cleanAdjList), ans['correct Recall'][i], aj, i)
-                    
-    
-#     elif x['Group'] == 4 or x['Group'] == 5 or x['Group'] == 6:
-#         for aj in cleanAdjList:
-#             if aj in list(adj['Adjektiv'][45:]) or aj in list(adj['AdjerlaubteZeichen'][45:]):
-#                 try:
-#                     if adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == -1:
-#                         negRightAns += 1
-#                     elif adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == 1:
-#                         posRightAns += 1
-#                     elif adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == 0:
-#                         NeutralRightAns += 1
-#                 except:
-#                     if adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == -1:
-#                         negRightAns += 1
-#                     elif adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == 1:
-#                         posRightAns += 1
-#                     elif adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == 0:
-#                         NeutralRightAns += 1
-# #                     print(len(cleanAdjList), ans['correct Recall'][i], aj, i)
-        
-#     numPosRecal.append(posRightAns)
-#     numNegRecal.append(negRightAns)
-#     numNeutralRecal.append(NeutralRightAns)
-
-
-# ans['Positive Recall'], ans['Neg Recall'], ans['Neutral Recall'] = \
-# numPosRecal, numNegRecal, numNeutralRecal
-
-# ans.iloc[:, 55:]
-
-
 # In[10]:
 
 
-# # COMPUTING recall and FPR based on sentiment
-
-# numPosPresentRecal = []
-# numPosPastRecal = []
-# numPosOtherRecal = []
-
-# numNegPresentRecal = []
-# numNegPastRecal = []
-# numNegOtherRecal = []
-
-# numNeutralPresentRecal = []
-# numNeutralPastRecal = []
-# numNeutralOtherRecal = []
-
-
-# for i, x in ans.iterrows():
-#     posPresentRightAns = 0
-#     posPastRightAns = 0
-#     posOtherRightAns = 0
-    
-#     negPresentRightAns = 0
-#     negPastRightAns = 0
-#     negOtherRightAns = 0
-    
-#     neutralPresentRightAns = 0
-#     neutralPastRightAns = 0
-#     neutralOtherRightAns = 0
-    
-    
-#     buf = x.iloc[12:57]
-#     cleanAdjList = []
-    
-#     for zz in buf:
-#         if type(zz) != type(np.nan):
-#             if zz.strip() != '' and zz not in cleanAdjList:
-#                 cleanAdjList.append(zz)
-    
-#     if x['Group'] == 1 or x['Group'] == 2 or x['Group'] == 3:
-#         for aj in cleanAdjList:
-#             if aj in list(adj['Adjektiv'][:45]) or aj in list(adj['AdjerlaubteZeichen'][:45]):
-#                 try:
-#                     if adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == 1:
-#                         if aj in list(adj['Adjektiv'][5:10]):
-#                             posPresentRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][20:25]):
-#                             posPastRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][35:40]):
-#                             posOtherRightAns += 1
-                    
-#                     elif adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == -1:
-#                         if aj in list(adj['Adjektiv'][:5]):
-#                             negPresentRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][15:20]):
-#                             negPastRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][30:35]):
-#                             negOtherRightAns += 1
-                    
-#                     elif adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == 0:
-#                         if aj in list(adj['Adjektiv'][10:15]):
-#                             neutralPresentRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][25:30]):
-#                             neutralPastRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][40:45]):
-#                             neutralOtherRightAns += 1
-#                 except:
-#                     if adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == 1:
-#                         if aj in list(adj['AdjerlaubteZeichen'][5:10]):
-#                             posPresentRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][20:25]):
-#                             posPastRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][35:40]):
-#                             posOtherRightAns += 1
-                    
-#                     elif adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == -1:
-#                         if aj in list(adj['AdjerlaubteZeichen'][:5]):
-#                             negPresentRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][15:20]):
-#                             negPastRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][30:35]):
-#                             negOtherRightAns += 1
-                    
-#                     elif adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == 0:
-#                         if aj in list(adj['AdjerlaubteZeichen'][10:15]):
-#                             neutralPresentRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][25:30]):
-#                             neutralPastRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][40:45]):
-#                             neutralOtherRightAns += 1
-
-#     elif x['Group'] == 4 or x['Group'] == 5 or x['Group'] == 6:
-#         for aj in cleanAdjList:
-#             if aj in list(adj['Adjektiv'][45:]) or aj in list(adj['AdjerlaubteZeichen'][45:]):
-#                 try:
-#                     if adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == 1:
-#                         if aj in list(adj['Adjektiv'][50:55]):
-#                             posPresentRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][65:70]):
-#                             posPastRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][80:85]):
-#                             posOtherRightAns += 1
-                    
-#                     elif adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == -1:
-#                         if aj in list(adj['Adjektiv'][45:50]):
-#                             negPresentRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][60:65]):
-#                             negPastRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][75:80]):
-#                             negOtherRightAns += 1
-                    
-#                     elif adj.loc[adj[adj['Adjektiv'] == aj].index[0], 'Valenz'] == 0:
-#                         if aj in list(adj['Adjektiv'][55:60]):
-#                             neutralPresentRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][70:75]):
-#                             neutralPastRightAns += 1
-#                         elif aj in list(adj['Adjektiv'][85:90]):
-#                             neutralOtherRightAns += 1
-#                 except:
-#                     if adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == 1:
-#                         if aj in list(adj['AdjerlaubteZeichen'][50:55]):
-#                             posPresentRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][65:70]):
-#                             posPastRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][80:85]):
-#                             posOtherRightAns += 1
-                    
-#                     elif adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == -1:
-#                         if aj in list(adj['AdjerlaubteZeichen'][45:50]):
-#                             negPresentRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][60:65]):
-#                             negPastRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][75:80]):
-#                             negOtherRightAns += 1
-                    
-#                     elif adj.loc[adj[adj['AdjerlaubteZeichen'] == aj].index[0], 'Valenz'] == 0:
-#                         if aj in list(adj['AdjerlaubteZeichen'][55:60]):
-#                             neutralPresentRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][70:75]):
-#                             neutralPastRightAns += 1
-#                         elif aj in list(adj['AdjerlaubteZeichen'][85:90]):
-#                             neutralOtherRightAns += 1
-                    
-#     numPosPresentRecal.append(posPresentRightAns)
-#     numPosPastRecal.append(posPastRightAns)
-#     numPosOtherRecal.append(posOtherRightAns)
-
-#     numNegPresentRecal.append(negPresentRightAns)
-#     numNegPastRecal.append(negPastRightAns)
-#     numNegOtherRecal.append(negOtherRightAns)
-
-#     numNeutralPresentRecal.append(neutralPresentRightAns)
-#     numNeutralPastRecal.append(neutralPastRightAns)
-#     numNeutralOtherRecal.append(neutralOtherRightAns)
-
-
-# ans['Positive Present Recall'], ans['Positive Past Recall'],ans['Positive Other Recall'] = numPosPresentRecal,\
-# numPosPastRecal, numPosOtherRecal
-
-# ans['Neg Present Recall'], ans['Neg Past Recall'], ans['Neg Other Recall'] = numNegPresentRecal, numNegPastRecal,\
-# numNegOtherRecal
-
-# ans['Neutral Present Recall'], ans['Neutral Past Recall'], ans['Neutral Other Recall'] = numNeutralPresentRecal,\
-# numNeutralPastRecal, numNeutralOtherRecal
+ans.iloc[:, :]
 
 
 # In[11]:
 
 
-ans.iloc[:, 57:]
+quas = pd.read_excel('Unipark 822.xlsx')
+quas
 
 
 # In[12]:
 
 
-ans.to_csv('Data Analysis.csv', index=False)
+encod = pd.read_csv('EncodingAggregated (1).csv')
+encod
+
+
+# In[13]:
+
+
+recalAnswer_Ecncoding = ans.merge(encod, left_on='Nosub', right_on='subj_counter_global', how="inner")
+
+
+# In[14]:
+
+
+recalAnswer_Ecncoding_questionnaire = recalAnswer_Ecncoding.merge(quas, left_on='VPCode', right_on='VPCode', how="inner")
+
+
+# In[15]:
+
+
+recalAnswer_Ecncoding_questionnaire.to_csv('Data integration.csv', index=False)
 
 
 # In[ ]:
